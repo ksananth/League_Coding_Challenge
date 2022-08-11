@@ -16,6 +16,7 @@ internal class ViewPostsViewModel(private val postsRepository: PostsRepository, 
             viewModelScope.launch {
                 when (postsRepository.getPosts(apiKey)) {
                     is ApiResponse.ApiError -> emit(UIState.Error)
+                    is ApiResponse.NoInternetError -> emit(UIState.NoInternet)
                     else -> {}
                 }
             }
@@ -26,5 +27,6 @@ internal class ViewPostsViewModel(private val postsRepository: PostsRepository, 
     internal sealed class UIState{
         object Loading: UIState()
         object Error: UIState()
+        object NoInternet: UIState()
     }
 }

@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import life.league.challenge.kotlin.api.ApiResponse
+import life.league.challenge.kotlin.feature.login.LoginViewModel
 import life.league.challenge.kotlin.repository.PostsRepository
 
 internal class ViewPostsViewModelTest:BehaviorSpec({
@@ -24,6 +25,20 @@ internal class ViewPostsViewModelTest:BehaviorSpec({
                 then("update uiState to error") {
                     viewModel.uiState.test {
                         awaitItem() shouldBe ViewPostsViewModel.UIState.Error
+                    }
+                }
+            }
+
+            and("no internet") {
+                coEvery { postsRepository.getPosts(any()) } returns ApiResponse.NoInternetError(
+                    java.lang.Exception("an error")
+                )
+
+                val viewModel = ViewPostsViewModel(postsRepository, apiKey)
+
+                then("update uiState to no internet") {
+                    viewModel.uiState.test {
+                        awaitItem() shouldBe ViewPostsViewModel.UIState.NoInternet
                     }
                 }
             }

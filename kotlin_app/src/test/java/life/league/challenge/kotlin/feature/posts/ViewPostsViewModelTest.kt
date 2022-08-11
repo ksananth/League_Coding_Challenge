@@ -44,7 +44,7 @@ internal class ViewPostsViewModelTest:BehaviorSpec({
             }
 
             and("success") {
-                val data = listOf(Post("1", "an id", "a titile", " a body"))
+                val data = listOf(Post(1, 234, "a titile", " a body"))
                 coEvery { postsRepository.getPosts(any()) } returns ApiResponse.Success(data)
 
                 val viewModel = ViewPostsViewModel(postsRepository, apiKey)

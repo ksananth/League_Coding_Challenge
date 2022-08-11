@@ -1,5 +1,6 @@
 package life.league.challenge.kotlin.repository
 
+import com.google.gson.JsonObject
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -18,12 +19,13 @@ internal class PostsRepositoryImplTest : ShouldSpec({
     val apiKey = "1234"
     val authorization = "an auth"
     val api = mockk<Api>()
+    val parser = mockk<PostParser>()
     val authorizationHelper = mockk<AuthorizationHelper>()
 
     should("call api with api key when posts service called") {
         coEvery { authorizationHelper.createAuth(apiKey) } returns authorization
-        coEvery { api.posts(authorization) } returns emptyList()
-        val repository = PostsRepositoryImpl(api, authorizationHelper)
+        coEvery { api.posts(authorization) } returns JsonObject()
+        val repository = PostsRepositoryImpl(api, parser)
 
         repository.getPosts(apiKey)
 
@@ -39,7 +41,7 @@ internal class PostsRepositoryImplTest : ShouldSpec({
         )
         coEvery { authorizationHelper.createAuth(apiKey) } returns authorization
         coEvery { api.posts(authorization) } throws httpException
-        val repository = PostsRepositoryImpl(api, authorizationHelper)
+        val repository = PostsRepositoryImpl(api,parser)
 
         val result = repository.getPosts(apiKey)
 
@@ -50,7 +52,7 @@ internal class PostsRepositoryImplTest : ShouldSpec({
         val ioException = IOException()
         coEvery { authorizationHelper.createAuth(apiKey) } returns authorization
         coEvery { api.posts(authorization) } throws ioException
-        val repository = PostsRepositoryImpl(api, authorizationHelper)
+        val repository = PostsRepositoryImpl(api,parser)
 
         val result = repository.getPosts(apiKey)
 
@@ -58,10 +60,11 @@ internal class PostsRepositoryImplTest : ShouldSpec({
     }
 
     should("return list of post when posts service success") {
-        val postList = listOf(Post("1","Ananth", "title", "Description"))
+        val postList = listOf(Post(1,23, "title", "Description"))
         coEvery { authorizationHelper.createAuth(apiKey) } returns authorization
-        coEvery { api.posts(authorization) } returns postList
-        val repository = PostsRepositoryImpl(api, authorizationHelper)
+        coEvery { api.posts(authorization) } returns JsonObject()
+        coEvery { parser.parse(any()) } returns postList
+        val repository = PostsRepositoryImpl(api,parser)
 
         val result = repository.getPosts(apiKey)
 

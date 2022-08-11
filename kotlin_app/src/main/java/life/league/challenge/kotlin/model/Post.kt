@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 
 data class Post(
     @SerializedName("userId")
-    var userId: String,
+    var userId: Int,
 
     @SerializedName("id")
-    var id: String,
+    var id: Int,
 
     @SerializedName("title")
     var title: String,

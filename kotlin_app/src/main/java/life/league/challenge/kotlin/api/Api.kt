@@ -14,6 +14,8 @@ interface Api {
     @GET("login")
     suspend fun login(@Header("Authorization") credentials: String?): Account
 
+    @GET("posts")
+    suspend fun posts(@Header("Authorization") authorization: String?): Unit
 }
 
 /**

@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import life.league.challenge.kotlin.api.ApiResponse
-import life.league.challenge.kotlin.feature.login.LoginViewModel
+import life.league.challenge.kotlin.model.Post
 import life.league.challenge.kotlin.repository.PostsRepository
 
 internal class ViewPostsViewModelTest:BehaviorSpec({
@@ -42,6 +42,20 @@ internal class ViewPostsViewModelTest:BehaviorSpec({
                     }
                 }
             }
+
+            and("success") {
+                val data = listOf(Post("1", "an id", "a titile", " a body"))
+                coEvery { postsRepository.getPosts(any()) } returns ApiResponse.Success(data)
+
+                val viewModel = ViewPostsViewModel(postsRepository, apiKey)
+
+                then("show data") {
+                    viewModel.uiState.test {
+                        awaitItem() shouldBe ViewPostsViewModel.UIState.Data(data)
+                    }
+                }
+            }
+
         }
     }
 })

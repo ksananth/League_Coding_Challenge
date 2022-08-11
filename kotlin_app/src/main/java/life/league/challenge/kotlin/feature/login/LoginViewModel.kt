@@ -22,7 +22,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                     is ApiResponse.Success -> if (result.data.apiKey.isNullOrEmpty()) {
                         emit(UIState.Error)
                     } else {
-                        UIState.NavigateToPosts(result.data.apiKey)
+                        emit(UIState.NavigateToPosts(result.data.apiKey))
                     }
                 }
             }

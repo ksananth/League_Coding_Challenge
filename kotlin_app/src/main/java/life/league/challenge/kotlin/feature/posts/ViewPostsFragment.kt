@@ -18,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ViewPostsFragment : Fragment() {
 
+    private val args: ViewPostsFragmentArgs by navArgs()
     private val viewModel: ViewPostsViewModel by viewModel()
 
     override fun onCreateView(

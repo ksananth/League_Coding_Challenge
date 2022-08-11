@@ -4,7 +4,11 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/viewPosts"
-        android:name="life.league.challenge.kotlin.feature.posts.ViewPostsFragment" />
+        android:name="life.league.challenge.kotlin.feature.posts.ViewPostsFragment">
+        <argument
+            android:name="apiKey"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="life.league.challenge.kotlin.feature.login.LoginFragment"
@@ -12,9 +16,6 @@
         <action
             android:id="@+id/action_loginFragment_to_viewPosts"
             app:destination="@id/viewPosts">
-            <argument
-                android:name="apiKey"
-                app:argType="string" />
         </action>
     </fragment>
 </navigation>

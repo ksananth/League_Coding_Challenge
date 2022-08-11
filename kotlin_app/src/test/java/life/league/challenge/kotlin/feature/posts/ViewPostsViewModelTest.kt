@@ -7,6 +7,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import life.league.challenge.kotlin.api.ApiResponse
 import life.league.challenge.kotlin.model.Post
+import life.league.challenge.kotlin.repository.APIInvalidException
 import life.league.challenge.kotlin.repository.PostsRepository
 
 internal class ViewPostsViewModelTest:BehaviorSpec({
@@ -39,6 +40,20 @@ internal class ViewPostsViewModelTest:BehaviorSpec({
                 then("update uiState to no internet") {
                     viewModel.uiState.test {
                         awaitItem() shouldBe ViewPostsViewModel.UIState.NoInternet
+                    }
+                }
+            }
+
+            and("api invalid") {
+                coEvery { postsRepository.getPosts(any()) } returns ApiResponse.ApiError(
+                    APIInvalidException("")
+                )
+
+                val viewModel = ViewPostsViewModel(postsRepository, apiKey)
+
+                then("update uiState to ApiInvalid") {
+                    viewModel.uiState.test {
+                        awaitItem() shouldBe ViewPostsViewModel.UIState.ApiInvalid
                     }
                 }
             }

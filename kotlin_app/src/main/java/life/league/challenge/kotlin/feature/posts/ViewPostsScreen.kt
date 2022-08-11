@@ -23,9 +23,10 @@ const val TEST_TAG_IMAGE = "IMAGE"
 internal fun ViewPostsScreen(state: ViewPostsViewModel.UIState) {
     when (state) {
         is ViewPostsViewModel.UIState.Data -> ShowPosts(state.data)
-        ViewPostsViewModel.UIState.Error -> ErrorScreen()
+        ViewPostsViewModel.UIState.Error -> ErrorScreen("Something went wrong")
         ViewPostsViewModel.UIState.Loading -> Loading("Fetching posts...")
         ViewPostsViewModel.UIState.NoInternet -> NoInternetScreen()
+        ViewPostsViewModel.UIState.ApiInvalid -> ErrorScreen("Api invalid")
     }
 }
 

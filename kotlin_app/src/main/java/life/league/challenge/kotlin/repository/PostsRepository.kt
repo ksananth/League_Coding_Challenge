@@ -26,6 +26,8 @@ internal class PostsRepositoryImpl(
             ApiResponse.ApiError(exception = e)
         } catch (e: IOException) {
             ApiResponse.NoInternetError(exception = e)
+        } catch (e: APIInvalidException) {
+            ApiResponse.ApiError(exception = e)
         }
     }
 }

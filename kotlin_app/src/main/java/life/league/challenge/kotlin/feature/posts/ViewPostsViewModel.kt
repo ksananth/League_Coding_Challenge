@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import life.league.challenge.kotlin.api.ApiResponse
 import life.league.challenge.kotlin.feature.login.LoginViewModel
 import life.league.challenge.kotlin.model.Post
+import life.league.challenge.kotlin.repository.APIInvalidException
 import life.league.challenge.kotlin.repository.PostsRepository
 
 internal class ViewPostsViewModel(
@@ -19,9 +20,13 @@ internal class ViewPostsViewModel(
         MutableStateFlow<UIState>(UIState.Loading).apply {
             viewModelScope.launch {
                 when (val result = postsRepository.getPosts(apiKey)) {
-                    is ApiResponse.ApiError -> emit(UIState.Error)
                     is ApiResponse.NoInternetError -> emit(UIState.NoInternet)
                     is ApiResponse.Success -> emit(UIState.Data(result.data))
+                    is ApiResponse.ApiError -> if (result.exception is APIInvalidException) {
+                        emit(UIState.ApiInvalid)
+                    } else {
+                        emit(UIState.Error)
+                    }
                 }
             }
         }
@@ -32,6 +37,7 @@ internal class ViewPostsViewModel(
         data class Data(val data: List<Post>) : UIState()
         object Loading : UIState()
         object Error : UIState()
+        object ApiInvalid : UIState()
         object NoInternet : UIState()
     }
 }

@@ -1,6 +1,7 @@
 package life.league.challenge.kotlin.api
 
 import life.league.challenge.kotlin.model.Account
+import life.league.challenge.kotlin.model.Post
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -15,7 +16,7 @@ interface Api {
     suspend fun login(@Header("Authorization") credentials: String?): Account
 
     @GET("posts")
-    suspend fun posts(@Header("Authorization") authorization: String?): Unit
+    suspend fun posts(@Header("Authorization") authorization: String?): List<Post>
 }
 
 /**

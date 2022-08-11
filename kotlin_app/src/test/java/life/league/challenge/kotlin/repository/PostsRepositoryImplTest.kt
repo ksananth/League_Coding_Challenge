@@ -7,7 +7,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import life.league.challenge.kotlin.api.Api
 import life.league.challenge.kotlin.api.ApiResponse
-import life.league.challenge.kotlin.model.Account
+import life.league.challenge.kotlin.model.Post
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.HttpException
@@ -22,7 +22,7 @@ internal class PostsRepositoryImplTest : ShouldSpec({
 
     should("call api with api key when posts service called") {
         coEvery { authorizationHelper.createAuth(apiKey) } returns authorization
-        coEvery { api.posts(authorization) } returns Unit
+        coEvery { api.posts(authorization) } returns emptyList()
         val repository = PostsRepositoryImpl(api, authorizationHelper)
 
         repository.getPosts(apiKey)
@@ -55,5 +55,16 @@ internal class PostsRepositoryImplTest : ShouldSpec({
         val result = repository.getPosts(apiKey)
 
         result shouldBe ApiResponse.NoInternetError(ioException)
+    }
+
+    should("return list of post when posts service success") {
+        val postList = listOf(Post("1","Ananth", "title", "Description"))
+        coEvery { authorizationHelper.createAuth(apiKey) } returns authorization
+        coEvery { api.posts(authorization) } returns postList
+        val repository = PostsRepositoryImpl(api, authorizationHelper)
+
+        val result = repository.getPosts(apiKey)
+
+        result shouldBe ApiResponse.Success(postList)
     }
 })

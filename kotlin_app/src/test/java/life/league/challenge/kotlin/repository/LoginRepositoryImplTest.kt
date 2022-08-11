@@ -8,8 +8,6 @@ import io.mockk.mockk
 import life.league.challenge.kotlin.api.Api
 import life.league.challenge.kotlin.api.ApiResponse
 import life.league.challenge.kotlin.model.Account
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.HttpException

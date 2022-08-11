@@ -11,8 +11,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import life.league.challenge.kotlin.R
+import life.league.challenge.kotlin.api.ApiResponse
 import life.league.challenge.kotlin.api.Service
 import life.league.challenge.kotlin.api.login
+import life.league.challenge.kotlin.repository.AuthorizationHelper
+import life.league.challenge.kotlin.repository.LoginRepository
+import life.league.challenge.kotlin.repository.LoginRepositoryImpl
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,20 +39,4 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, null)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
-
-    override fun onResume() {
-        super.onResume()
-
-        // example api call to login, feel free to delete this and implement the call to login
-        // somewhere else differently depending on your chosen architecture
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val account = Service.api.login("hello", "world")
-                Log.v(TAG, account.apiKey ?: "")
-            } catch (t : Throwable) {
-                Log.e(TAG, t.message, t)
-            }
-        }
-    }
-
 }

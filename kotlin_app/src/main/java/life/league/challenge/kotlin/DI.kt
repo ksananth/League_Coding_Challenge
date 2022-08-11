@@ -12,6 +12,7 @@ import org.koin.dsl.module
 val appModule = module {
 
     factory { AuthorizationHelper() }
+
     single<LoginRepository> { LoginRepositoryImpl(Service.api, get()) }
     single<PostsRepository> { PostsRepositoryImpl(Service.api, get()) }
 

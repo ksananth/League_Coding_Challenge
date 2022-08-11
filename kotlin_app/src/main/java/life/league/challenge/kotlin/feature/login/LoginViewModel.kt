@@ -13,10 +13,10 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _uiState: MutableStateFlow<UIState> by lazy {
         MutableStateFlow<UIState>(UIState.Loading).apply {
             viewModelScope.launch {
-                when (loginRepository.login("hello", "world")) {
+                when (val result = loginRepository.login("hello", "world")) {
                     is ApiResponse.ApiError -> emit(UIState.Error)
                     is ApiResponse.NoInternetError -> emit(UIState.NoInternet)
-                    is ApiResponse.Success -> TODO()
+                    is ApiResponse.Success -> emit(UIState.NavigateToPosts(result.data.apiKey))
                 }
             }
         }
@@ -28,6 +28,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         object Loading : UIState()
         object Error : UIState()
         object NoInternet : UIState()
+        data class NavigateToPosts(val apiKey: String?) : UIState()
     }
 }
 

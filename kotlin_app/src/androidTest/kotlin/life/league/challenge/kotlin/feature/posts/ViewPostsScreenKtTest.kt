@@ -34,4 +34,13 @@ internal class ViewPostsScreenKtTest {
         composeTestRule.onNodeWithText("Something went wrong").assertIsDisplayed()
     }
 
+    @Test
+    fun noInternetState() {
+        composeTestRule.setContent {
+            ViewPostsScreen(state = ViewPostsViewModel.UIState.NoInternet)
+        }
+
+        composeTestRule.onNodeWithText("Please check your internet connections.").assertIsDisplayed()
+    }
+
 }

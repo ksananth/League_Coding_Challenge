@@ -15,7 +15,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             viewModelScope.launch {
                 when (loginRepository.login("hello", "world")) {
                     is ApiResponse.ApiError -> emit(UIState.Error)
-                    is ApiResponse.NoInternetError -> TODO()
+                    is ApiResponse.NoInternetError -> emit(UIState.NoInternet)
                     is ApiResponse.Success -> TODO()
                 }
             }
@@ -27,6 +27,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     sealed class UIState {
         object Loading : UIState()
         object Error : UIState()
+        object NoInternet : UIState()
     }
 }
 

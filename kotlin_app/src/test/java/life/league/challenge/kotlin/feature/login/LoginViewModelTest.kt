@@ -27,6 +27,18 @@ internal class LoginViewModelTest : BehaviorSpec({
                     }
                 }
             }
+
+            and("no internet") {
+                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.NoInternetError(Exception("an error"))
+
+                val viewModel = LoginViewModel(loginRepository)
+
+                then("update uiState to no internet") {
+                    viewModel.uiState.test {
+                        awaitItem() shouldBe LoginViewModel.UIState.NoInternet
+                    }
+                }
+            }
         }
     }
 })

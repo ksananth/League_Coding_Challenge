@@ -18,6 +18,6 @@ interface Api {
     suspend fun login(@Header("Authorization") credentials: String?): Account
 
     @GET("posts")
-    suspend fun posts(@Query("x-access-token") apiKey: String): JsonElement
+    suspend fun posts(@Header("Authorization") credentials: String?): JsonElement
 }
 

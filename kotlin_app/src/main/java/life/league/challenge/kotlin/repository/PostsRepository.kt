@@ -12,12 +12,14 @@ internal interface PostsRepository {
 
 internal class PostsRepositoryImpl(
     private val api: Api,
-    private val parser: PostParser
+    private val parser: PostParser,
+    private val authorizationHelper: AuthorizationHelper
 ) : PostsRepository {
 
     override suspend fun getPosts(apiKey: String): ApiResponse<List<Post>> {
         return try {
-            val result = api.posts(apiKey)
+            val auth = authorizationHelper.createAuth(apiKey)
+            val result = api.posts(auth)
             val posts = parser.parse(result)
             ApiResponse.Success(data = posts)
         } catch (e: HttpException) {

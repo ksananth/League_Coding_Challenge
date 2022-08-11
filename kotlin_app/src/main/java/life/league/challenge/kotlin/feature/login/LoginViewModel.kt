@@ -16,15 +16,16 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _uiState: MutableStateFlow<UIState> by lazy {
         MutableStateFlow<UIState>(UIState.Loading).apply {
             viewModelScope.launch {
-                when (val result = loginRepository.login(USERNAME, PASSWORD)) {
-                    is ApiResponse.ApiError -> emit(UIState.Error)
-                    is ApiResponse.NoInternetError -> emit(UIState.NoInternet)
+                val state = when (val result = loginRepository.login(USERNAME, PASSWORD)) {
+                    is ApiResponse.ApiError -> UIState.Error
+                    is ApiResponse.NoInternetError -> UIState.NoInternet
                     is ApiResponse.Success -> if (result.data.apiKey.isNullOrEmpty()) {
-                        emit(UIState.Error)
+                        UIState.Error
                     } else {
-                        emit(UIState.NavigateToPosts(result.data.apiKey))
+                        UIState.NavigateToPosts(result.data.apiKey)
                     }
                 }
+                emit(state)
             }
         }
     }

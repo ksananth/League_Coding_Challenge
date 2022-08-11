@@ -13,6 +13,11 @@ android {
           compose = true
       }
 
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 
       composeOptions {
           kotlinCompilerExtensionVersion compose_version
@@ -70,9 +75,9 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
 
     // Koin
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-scope:$koin_version"
+    //implementation "org.koin:koin-android:$koin_version"
+    //implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    //implementation "org.koin:koin-androidx-scope:$koin_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -82,4 +87,6 @@ dependencies {
     testImplementation "io.kotest:kotest-runner-junit5:$kotest_version"
     testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
     testImplementation "io.kotest:kotest-property:$kotest_version"
+    testImplementation "io.mockk:mockk:1.12.5"
+
 }

@@ -4,6 +4,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import life.league.challenge.kotlin.feature.login.LoginScreen
+import life.league.challenge.kotlin.feature.login.LoginViewModel
 import org.junit.Rule
 import org.junit.Test
 
@@ -22,4 +24,14 @@ internal class ViewPostsScreenKtTest {
 
         composeTestRule.onNodeWithText("Fetching posts...").assertIsDisplayed()
     }
+
+    @Test
+    fun errorState() {
+        composeTestRule.setContent {
+            ViewPostsScreen(state = ViewPostsViewModel.UIState.Error)
+        }
+
+        composeTestRule.onNodeWithText("Something went wrong").assertIsDisplayed()
+    }
+
 }

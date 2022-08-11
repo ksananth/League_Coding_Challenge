@@ -36,4 +36,11 @@ class AuthorizationHelper {
             Base64.NO_WRAP
         )
     }
+
+    fun createAuth(apiKey: String): String {
+        return "Basic " + Base64.encodeToString(
+            "x-access-token:$apiKey".toByteArray(),
+            Base64.NO_WRAP
+        )
+    }
 }

@@ -10,9 +10,9 @@ object Service {
 
     val api: Api by lazy {
         val retrofit = Retrofit.Builder()
-                .baseUrl(HOST)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        retrofit.create<Api>(Api::class.java)
+            .baseUrl(HOST)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        retrofit.create(Api::class.java)
     }
 }

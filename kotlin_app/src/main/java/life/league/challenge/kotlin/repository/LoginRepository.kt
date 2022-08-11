@@ -17,7 +17,7 @@ class LoginRepositoryImpl(
 ) : LoginRepository {
 
     override suspend fun login(username: String, password: String): ApiResponse<Account> {
-        val authorization = authorizationHelper.create(username, password)
+        val authorization = authorizationHelper.createBasicAuth(username, password)
         return try {
             val result = api.login(authorization)
             ApiResponse.Success(data = result)
@@ -30,7 +30,7 @@ class LoginRepositoryImpl(
 }
 
 class AuthorizationHelper {
-    fun create(username: String, password: String): String {
+    fun createBasicAuth(username: String, password: String): String {
         return "Basic " + Base64.encodeToString(
             "$username:$password".toByteArray(),
             Base64.NO_WRAP

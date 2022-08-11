@@ -24,7 +24,7 @@ internal class LoginRepositoryImplTest : ShouldSpec({
     val authorizationHelper = mockk<AuthorizationHelper>()
 
     should("call api with authorization when login service called") {
-        coEvery { authorizationHelper.create(username, password) } returns authorization
+        coEvery { authorizationHelper.createBasicAuth(username, password) } returns authorization
         coEvery { api.login(authorization) } returns Account("an api key")
         val repository = LoginRepositoryImpl(api, authorizationHelper)
 
@@ -34,7 +34,7 @@ internal class LoginRepositoryImplTest : ShouldSpec({
     }
 
     should("return account when login service success") {
-        coEvery { authorizationHelper.create(username, password) } returns authorization
+        coEvery { authorizationHelper.createBasicAuth(username, password) } returns authorization
         coEvery { api.login(authorization) } returns account
         val repository = LoginRepositoryImpl(api, authorizationHelper)
 
@@ -49,7 +49,7 @@ internal class LoginRepositoryImplTest : ShouldSpec({
                 500, "error".toResponseBody()
             )
         )
-        coEvery { authorizationHelper.create(username, password) } returns authorization
+        coEvery { authorizationHelper.createBasicAuth(username, password) } returns authorization
         coEvery { api.login(authorization) } throws httpException
         val repository = LoginRepositoryImpl(api, authorizationHelper)
 
@@ -60,7 +60,7 @@ internal class LoginRepositoryImplTest : ShouldSpec({
 
     should("return no network error when no internet") {
         val ioException = IOException()
-        coEvery { authorizationHelper.create(username, password) } returns authorization
+        coEvery { authorizationHelper.createBasicAuth(username, password) } returns authorization
         coEvery { api.login(authorization) } throws ioException
         val repository = LoginRepositoryImpl(api, authorizationHelper)
 

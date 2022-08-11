@@ -35,10 +35,4 @@ class ViewPostsFragment : Fragment() {
             }
         }
     }
-
-
-    @Composable
-    fun Greeting(name: String) {
-        Text(text = "Hello $name!")
-    }
 }

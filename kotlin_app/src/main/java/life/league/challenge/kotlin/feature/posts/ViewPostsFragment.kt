@@ -15,11 +15,12 @@ import androidx.navigation.fragment.navArgs
 import com.kraftanapp.myapplication.ui.theme.MyApplicationTheme
 import life.league.challenge.kotlin.feature.login.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class ViewPostsFragment : Fragment() {
 
     private val args: ViewPostsFragmentArgs by navArgs()
-    private val viewModel: ViewPostsViewModel by viewModel()
+    private val viewModel: ViewPostsViewModel by viewModel { parametersOf(args.apiKey) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

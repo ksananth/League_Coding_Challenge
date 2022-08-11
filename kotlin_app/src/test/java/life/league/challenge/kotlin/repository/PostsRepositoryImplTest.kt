@@ -12,6 +12,7 @@ import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 internal class PostsRepositoryImplTest : ShouldSpec({
     val apiKey = "1234"
@@ -43,5 +44,16 @@ internal class PostsRepositoryImplTest : ShouldSpec({
         val result = repository.getPosts(apiKey)
 
         result shouldBe ApiResponse.ApiError(httpException)
+    }
+
+    should("return no network error when no internet") {
+        val ioException = IOException()
+        coEvery { authorizationHelper.createAuth(apiKey) } returns authorization
+        coEvery { api.posts(authorization) } throws ioException
+        val repository = PostsRepositoryImpl(api, authorizationHelper)
+
+        val result = repository.getPosts(apiKey)
+
+        result shouldBe ApiResponse.NoInternetError(ioException)
     }
 })

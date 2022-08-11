@@ -22,4 +22,22 @@ import org.junit.Test
 
         composeTestRule.onNodeWithText("Please wait logging in...").assertIsDisplayed()
     }
+
+     @Test
+     fun errorState() {
+         composeTestRule.setContent {
+             LoginScreen(state = LoginViewModel.UIState.Error)
+         }
+
+         composeTestRule.onNodeWithText("Something went wrong").assertIsDisplayed()
+     }
+
+     @Test
+     fun noInternetState() {
+         composeTestRule.setContent {
+             LoginScreen(state = LoginViewModel.UIState.NoInternet)
+         }
+
+         composeTestRule.onNodeWithText("Please check your internet connections.").assertIsDisplayed()
+     }
 }

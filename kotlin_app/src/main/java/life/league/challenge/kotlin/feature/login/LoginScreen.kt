@@ -9,7 +9,7 @@ import life.league.challenge.kotlin.composables.NoInternetScreen
 fun LoginScreen(state: LoginViewModel.UIState) {
     when (state) {
         is LoginViewModel.UIState.Error -> ErrorScreen()
-        is LoginViewModel.UIState.Loading -> Loading()
+        is LoginViewModel.UIState.Loading -> Loading("Please wait logging in...")
         is LoginViewModel.UIState.NavigateToPosts -> TODO()
         is LoginViewModel.UIState.NoInternet -> NoInternetScreen()
     }

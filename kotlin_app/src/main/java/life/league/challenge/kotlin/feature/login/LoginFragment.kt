@@ -32,12 +32,12 @@ class LoginFragment : Fragment(),Navigate {
         }
     }
 
-    override fun navigateToPosts(apiKey: String?) {
-        val direction = LoginFragmentDirections.actionLoginFragmentToViewPosts()
+    override fun navigateToPosts(apiKey: String) {
+        val direction = LoginFragmentDirections.actionLoginFragmentToViewPosts(apiKey)
         findNavController().navigate(direction)
     }
 }
 
 interface Navigate{
-    fun navigateToPosts(apiKey: String?)
+    fun navigateToPosts(apiKey: String)
 }

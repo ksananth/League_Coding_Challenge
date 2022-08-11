@@ -41,6 +41,21 @@ internal class LoginViewModelTest : BehaviorSpec({
                 }
             }
 
+            and("success but api key is null") {
+                val apiKey = null
+                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.Success(Account(
+                    apiKey
+                ))
+
+                val viewModel = LoginViewModel(loginRepository)
+
+                then("navigate to post screen with api key") {
+                    viewModel.uiState.test {
+                        awaitItem() shouldBe LoginViewModel.UIState.Error
+                    }
+                }
+            }
+
             and("success") {
                 val apiKey = "api key"
                 coEvery { loginRepository.login(any(), any()) } returns ApiResponse.Success(Account(
@@ -55,6 +70,7 @@ internal class LoginViewModelTest : BehaviorSpec({
                     }
                 }
             }
+
         }
     }
 })

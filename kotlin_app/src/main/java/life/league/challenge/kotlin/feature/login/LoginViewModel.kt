@@ -19,7 +19,11 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 when (val result = loginRepository.login(USERNAME, PASSWORD)) {
                     is ApiResponse.ApiError -> emit(UIState.Error)
                     is ApiResponse.NoInternetError -> emit(UIState.NoInternet)
-                    is ApiResponse.Success -> emit(UIState.NavigateToPosts(result.data.apiKey))
+                    is ApiResponse.Success -> if (result.data.apiKey.isNullOrEmpty()) {
+                        emit(UIState.Error)
+                    } else {
+                        UIState.NavigateToPosts(result.data.apiKey)
+                    }
                 }
             }
         }
@@ -31,7 +35,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         object Loading : UIState()
         object Error : UIState()
         object NoInternet : UIState()
-        data class NavigateToPosts(val apiKey: String?) : UIState()
+        data class NavigateToPosts(val apiKey: String) : UIState()
     }
 }
 

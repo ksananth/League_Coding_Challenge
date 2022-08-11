@@ -1,9 +1,11 @@
 package life.league.challenge.kotlin.repository
 
 import life.league.challenge.kotlin.api.Api
+import life.league.challenge.kotlin.api.ApiResponse
+import retrofit2.HttpException
 
 internal interface PostsRepository {
-    suspend fun getPosts(apiKey: String)
+    suspend fun getPosts(apiKey: String):  ApiResponse<Unit>
 }
 
 internal class PostsRepositoryImpl(
@@ -11,8 +13,12 @@ internal class PostsRepositoryImpl(
     private val authorizationHelper: AuthorizationHelper
 ) : PostsRepository {
 
-    override suspend fun getPosts(apiKey: String) {
+    override suspend fun getPosts(apiKey: String): ApiResponse<Unit> {
         val auth = authorizationHelper.createAuth(apiKey)
-        api.posts(auth)
+        return try {
+            ApiResponse.Success(data = api.posts(auth))
+        } catch (e: HttpException) {
+            ApiResponse.ApiError(exception = e)
+        }
     }
 }

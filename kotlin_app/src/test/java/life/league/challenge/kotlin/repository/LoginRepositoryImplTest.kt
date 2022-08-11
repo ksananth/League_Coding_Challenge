@@ -12,11 +12,13 @@ import life.league.challenge.kotlin.model.Account
 internal class LoginRepositoryImplTest : ShouldSpec({
     val username = "a name"
     val password = "a password"
+    val account = Account("an api key")
+    val authorization = "an authorization"
+
+    val api = mockk<Api>()
+    val authorizationHelper = mockk<AuthorizationHelper>()
 
     should("call api with authorization when login service called") {
-        val api = mockk<Api>()
-        val authorization = "an authorization"
-        val authorizationHelper = mockk<AuthorizationHelper>()
         coEvery { authorizationHelper.create(username, password) } returns authorization
         coEvery { api.login(authorization) } returns Account("an api key")
         val repository = LoginRepositoryImpl(api, authorizationHelper)
@@ -27,10 +29,6 @@ internal class LoginRepositoryImplTest : ShouldSpec({
     }
 
     should("return account when login service success") {
-        val api = mockk<Api>()
-        val authorization = "an authorization"
-        val authorizationHelper = mockk<AuthorizationHelper>()
-        val account = Account("an api key")
         coEvery { authorizationHelper.create(username, password) } returns authorization
         coEvery { api.login(authorization) } returns account
         val repository = LoginRepositoryImpl(api, authorizationHelper)

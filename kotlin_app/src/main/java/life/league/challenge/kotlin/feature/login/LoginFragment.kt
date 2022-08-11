@@ -9,10 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.kraftanapp.myapplication.ui.theme.MyApplicationTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(),Navigate {
 
     private val viewModel: LoginViewModel by viewModel()
 
@@ -24,9 +26,18 @@ class LoginFragment : Fragment() {
             setContent {
                 val state by remember { viewModel.uiState }.collectAsState()
                 MyApplicationTheme {
-                    LoginScreen(state)
+                    LoginScreen(state, this@LoginFragment)
                 }
             }
         }
     }
+
+    override fun navigateToPosts(apiKey: String?) {
+        val direction = LoginFragmentDirections.actionLoginFragmentToViewPosts()
+        findNavController().navigate(direction)
+    }
+}
+
+interface Navigate{
+    fun navigateToPosts(apiKey: String?)
 }

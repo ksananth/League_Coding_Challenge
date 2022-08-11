@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/viewPosts">
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/viewPosts"
         android:name="life.league.challenge.kotlin.feature.posts.ViewPostsFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="life.league.challenge.kotlin.feature.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_viewPosts"
+            app:destination="@id/viewPosts" />
+    </fragment>
 </navigation>

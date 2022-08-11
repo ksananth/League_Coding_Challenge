@@ -8,6 +8,12 @@ import io.mockk.mockk
 import life.league.challenge.kotlin.api.Api
 import life.league.challenge.kotlin.api.ApiResponse
 import life.league.challenge.kotlin.model.Account
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
+import retrofit2.HttpException
+import retrofit2.Response
 
 internal class LoginRepositoryImplTest : ShouldSpec({
     val username = "a name"
@@ -36,5 +42,20 @@ internal class LoginRepositoryImplTest : ShouldSpec({
         val result = repository.login(username, password)
 
         result shouldBe ApiResponse.Success(account)
+    }
+
+    should("return api error when login service fails") {
+        val httpException = HttpException(
+            Response.error<ResponseBody>(
+                500, "error".toResponseBody()
+            )
+        )
+        coEvery { authorizationHelper.create(username, password) } returns authorization
+        coEvery { api.login(authorization) } throws httpException
+        val repository = LoginRepositoryImpl(api, authorizationHelper)
+
+        val result = repository.login(username, password)
+
+        result shouldBe ApiResponse.ApiError(httpException)
     }
 })

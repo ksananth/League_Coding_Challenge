@@ -18,8 +18,12 @@ class LoginRepositoryImpl(
 
     override suspend fun login(username: String, password: String): ApiResponse<Account> {
         val authorization = authorizationHelper.create(username, password)
-        val result = api.login(authorization)
-        return ApiResponse.Success(data = result)
+        return try {
+            val result = api.login(authorization)
+            ApiResponse.Success(data = result)
+        } catch (e: HttpException) {
+            ApiResponse.ApiError(exception = e)
+        }
     }
 }
 

@@ -14,6 +14,7 @@ import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 internal class LoginRepositoryImplTest : ShouldSpec({
     val username = "a name"
@@ -57,5 +58,16 @@ internal class LoginRepositoryImplTest : ShouldSpec({
         val result = repository.login(username, password)
 
         result shouldBe ApiResponse.ApiError(httpException)
+    }
+
+    should("return no network error when no internet") {
+        val ioException = IOException()
+        coEvery { authorizationHelper.create(username, password) } returns authorization
+        coEvery { api.login(authorization) } throws ioException
+        val repository = LoginRepositoryImpl(api, authorizationHelper)
+
+        val result = repository.login(username, password)
+
+        result shouldBe ApiResponse.NoInternetError(ioException)
     }
 })

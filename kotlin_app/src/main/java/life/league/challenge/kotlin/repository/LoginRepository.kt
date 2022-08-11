@@ -23,6 +23,8 @@ class LoginRepositoryImpl(
             ApiResponse.Success(data = result)
         } catch (e: HttpException) {
             ApiResponse.ApiError(exception = e)
+        } catch (e: IOException) {
+            ApiResponse.NoInternetError(exception = e)
         }
     }
 }

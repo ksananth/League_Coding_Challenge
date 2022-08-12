@@ -18,8 +18,8 @@ val appModule = module {
     factory { UserParser() }
 
     single<LoginRepository> { LoginRepositoryImpl(Service.api, get()) }
-    single<PostsRepository> { PostsRepositoryImpl(Service.api, get()) }
     single<UserRepository> { UserRepositoryImpl(Service.api, get()) }
+    single<PostsRepository> { PostsRepositoryImpl(Service.api, get(), get()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { params -> ViewPostsViewModel(get(), params.get()) }

@@ -3,8 +3,7 @@ package life.league.challenge.kotlin.repository.parser
 import com.google.gson.JsonParser
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
-import life.league.challenge.kotlin.model.User
-import org.junit.jupiter.api.Assertions.*
+import life.league.challenge.kotlin.domain.User
 
 internal class UserParserTest:ShouldSpec({
 
@@ -41,6 +40,10 @@ internal class UserParserTest:ShouldSpec({
 
         val result= parser.parse(res)
 
-        result shouldBe listOf(User(avatar ="https://i.pravatar.cc/150?u=1", username =  "Bret"))
+        result shouldBe listOf(User(
+            id = 1,
+            avatar ="https://i.pravatar.cc/150?u=1",
+            username =  "Bret"
+        ))
     }
 })

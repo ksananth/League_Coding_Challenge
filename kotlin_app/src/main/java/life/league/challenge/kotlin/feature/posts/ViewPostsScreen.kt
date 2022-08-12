@@ -15,6 +15,7 @@ import life.league.challenge.kotlin.R
 import life.league.challenge.kotlin.composables.ErrorScreen
 import life.league.challenge.kotlin.composables.Loading
 import life.league.challenge.kotlin.composables.NoInternetScreen
+import life.league.challenge.kotlin.domain.UserPost
 import life.league.challenge.kotlin.model.Post
 
 const val TEST_TAG_IMAGE = "IMAGE"
@@ -31,7 +32,7 @@ internal fun ViewPostsScreen(state: ViewPostsViewModel.UIState) {
 }
 
 @Composable
-fun ShowPosts(data: List<Post>) {
+fun ShowPosts(data: List<UserPost>) {
     LazyColumn {
         items(data.size) { index ->
             PostCard(data[index])
@@ -40,7 +41,7 @@ fun ShowPosts(data: List<Post>) {
 }
 
 @Composable
-fun PostCard(msg: Post) {
+fun PostCard(msg: UserPost) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
         Image(
             painter = painterResource(R.drawable.ic_launcher_background),
@@ -56,7 +57,7 @@ fun PostCard(msg: Post) {
         Column {
             Text(text = msg.title)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = msg.body)
+            Text(text = msg.description)
         }
     }
 }

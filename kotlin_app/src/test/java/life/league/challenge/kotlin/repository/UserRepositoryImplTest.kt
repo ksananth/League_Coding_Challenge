@@ -7,11 +7,10 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import life.league.challenge.kotlin.api.Api
 import life.league.challenge.kotlin.api.ApiResponse
-import life.league.challenge.kotlin.model.User
+import life.league.challenge.kotlin.domain.User
 import life.league.challenge.kotlin.repository.parser.UserParser
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
-import org.junit.jupiter.api.Assertions.*
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
@@ -24,7 +23,7 @@ internal class UserRepositoryImplTest: ShouldSpec({
     should("return users when user service success") {
         val response = JsonObject()
         coEvery { api.users(apiKey) } returns response
-        val users = listOf(User("avatar", "name"))
+        val users = listOf(User(1, "avatar", "name"))
         coEvery { parser.parse(response) } returns users
         val repository = UserRepositoryImpl(api, parser)
 

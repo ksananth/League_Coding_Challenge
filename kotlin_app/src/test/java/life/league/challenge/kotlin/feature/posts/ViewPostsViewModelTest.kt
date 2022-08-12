@@ -6,6 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import life.league.challenge.kotlin.api.ApiResponse
+import life.league.challenge.kotlin.domain.UserPost
 import life.league.challenge.kotlin.model.Post
 import life.league.challenge.kotlin.repository.APIInvalidException
 import life.league.challenge.kotlin.repository.PostsRepository
@@ -59,7 +60,7 @@ internal class ViewPostsViewModelTest:BehaviorSpec({
             }
 
             and("success") {
-                val data = listOf(Post(1, 234, "a titile", " a body"))
+                val data = listOf(UserPost("avatar", "ananth", "a titile", " a body"))
                 coEvery { postsRepository.getPosts(any()) } returns ApiResponse.Success(data)
 
                 val viewModel = ViewPostsViewModel(postsRepository, apiKey)

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import life.league.challenge.kotlin.api.ApiResponse
+import life.league.challenge.kotlin.domain.UserPost
 import life.league.challenge.kotlin.feature.login.LoginViewModel
 import life.league.challenge.kotlin.model.Post
 import life.league.challenge.kotlin.repository.APIInvalidException
@@ -35,7 +36,7 @@ internal class ViewPostsViewModel(
     val uiState: StateFlow<UIState> get() = _uiState
 
     internal sealed class UIState {
-        data class Data(val data: List<Post>) : UIState()
+        data class Data(val data: List<UserPost>) : UIState()
         object Loading : UIState()
         object Error : UIState()
         object ApiInvalid : UIState()

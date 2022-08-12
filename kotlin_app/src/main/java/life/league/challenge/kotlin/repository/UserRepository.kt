@@ -1,9 +1,8 @@
 package life.league.challenge.kotlin.repository
 
-import com.google.gson.JsonElement
 import life.league.challenge.kotlin.api.Api
 import life.league.challenge.kotlin.api.ApiResponse
-import life.league.challenge.kotlin.model.User
+import life.league.challenge.kotlin.domain.User
 import life.league.challenge.kotlin.repository.parser.UserParser
 import retrofit2.HttpException
 import java.io.IOException

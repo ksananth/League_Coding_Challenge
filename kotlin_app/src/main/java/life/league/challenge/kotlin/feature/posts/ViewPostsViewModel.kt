@@ -19,15 +19,16 @@ internal class ViewPostsViewModel(
     private val _uiState: MutableStateFlow<UIState> by lazy {
         MutableStateFlow<UIState>(UIState.Loading).apply {
             viewModelScope.launch {
-                when (val result = postsRepository.getPosts(apiKey)) {
-                    is ApiResponse.NoInternetError -> emit(UIState.NoInternet)
-                    is ApiResponse.Success -> emit(UIState.Data(result.data))
+                val state = when (val result = postsRepository.getPosts(apiKey)) {
+                    is ApiResponse.NoInternetError -> UIState.NoInternet
+                    is ApiResponse.Success -> UIState.Data(result.data)
                     is ApiResponse.ApiError -> if (result.exception is APIInvalidException) {
-                        emit(UIState.ApiInvalid)
+                        UIState.ApiInvalid
                     } else {
-                        emit(UIState.Error)
+                        UIState.Error
                     }
                 }
+                emit(state)
             }
         }
     }

@@ -12,8 +12,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="life.league.challenge.kotlin.feature.login.LoginFragment"
-        android:label="Login">
+        android:name="life.league.challenge.kotlin.feature.login.LoginFragment">
         <action
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true"

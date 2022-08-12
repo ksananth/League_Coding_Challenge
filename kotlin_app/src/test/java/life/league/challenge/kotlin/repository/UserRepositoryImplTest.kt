@@ -12,6 +12,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.jupiter.api.Assertions.*
 import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 internal class UserRepositoryImplTest: ShouldSpec({
 
@@ -39,5 +40,15 @@ internal class UserRepositoryImplTest: ShouldSpec({
         val result = repository.getUsers(apiKey)
 
         result shouldBe ApiResponse.ApiError(httpException)
+    }
+
+    should("return no network error when no internet") {
+        val ioException = IOException()
+        coEvery { api.users(apiKey) } throws ioException
+        val repository = UserRepositoryImpl(api)
+
+        val result = repository.getUsers(apiKey)
+
+        result shouldBe ApiResponse.NoInternetError(ioException)
     }
 })

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:startDestination="@id/loginFragment">
     <fragment
+        android:label="Posts"
         android:id="@+id/viewPosts"
         android:name="life.league.challenge.kotlin.feature.posts.ViewPostsFragment">
         <argument
@@ -12,7 +13,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="life.league.challenge.kotlin.feature.login.LoginFragment"
-        android:label="LoginFragment">
+        android:label="Login">
         <action
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true"

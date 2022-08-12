@@ -19,5 +19,8 @@ interface Api {
 
     @GET("posts")
     suspend fun posts(@Header("x-access-token") credentials: String?): JsonElement
+
+    @GET("posts")
+    suspend fun users(@Header("x-access-token") credentials: String?): JsonElement
 }
 

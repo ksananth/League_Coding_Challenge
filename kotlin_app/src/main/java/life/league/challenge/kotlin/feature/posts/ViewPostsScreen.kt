@@ -11,12 +11,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import life.league.challenge.kotlin.R
+import coil.compose.rememberAsyncImagePainter
 import life.league.challenge.kotlin.composables.ErrorScreen
 import life.league.challenge.kotlin.composables.Loading
 import life.league.challenge.kotlin.composables.NoInternetScreen
 import life.league.challenge.kotlin.domain.UserPost
-import life.league.challenge.kotlin.model.Post
+import life.league.challenge.kotlin.R
 
 const val TEST_TAG_IMAGE = "IMAGE"
 
@@ -44,7 +44,7 @@ fun ShowPosts(data: List<UserPost>) {
 fun PostCard(msg: UserPost) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
         Image(
-            painter = painterResource(R.drawable.ic_launcher_background),
+            painter = rememberAsyncImagePainter(model = msg.avatar, error = painterResource(R.drawable.ic__avatar), placeholder = painterResource(R.drawable.ic_loading)),
             contentDescription = "Contact profile picture",
             modifier = Modifier
                 .size(40.dp)

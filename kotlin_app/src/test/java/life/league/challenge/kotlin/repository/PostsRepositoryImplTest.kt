@@ -23,12 +23,15 @@ internal class PostsRepositoryImplTest : ShouldSpec({
     val parser = mockk<PostParser>()
 
     should("call api with api key when posts service called") {
-        coEvery { api.posts(authorization) } returns JsonObject()
+        val response = JsonObject()
+        val posts = listOf(Post(1, 2, "title", "a body"))
+        coEvery { api.posts(apiKey) } returns response
+        coEvery { parser.parse(response) } returns posts
         val repository = PostsRepositoryImpl(api, parser)
 
         repository.getPosts(apiKey)
 
-        coVerify { api.posts(authorization) }
+        coVerify { api.posts(apiKey) }
     }
 
 
@@ -38,7 +41,7 @@ internal class PostsRepositoryImplTest : ShouldSpec({
                 500, "error".toResponseBody()
             )
         )
-        coEvery { api.posts(authorization) } throws httpException
+        coEvery { api.posts(apiKey) } throws httpException
         val repository = PostsRepositoryImpl(api, parser)
 
         val result = repository.getPosts(apiKey)
@@ -48,7 +51,7 @@ internal class PostsRepositoryImplTest : ShouldSpec({
 
     should("return no network error when no internet") {
         val ioException = IOException()
-        coEvery { api.posts(authorization) } throws ioException
+        coEvery { api.posts(apiKey) } throws ioException
         val repository = PostsRepositoryImpl(api, parser)
 
         val result = repository.getPosts(apiKey)
@@ -58,7 +61,7 @@ internal class PostsRepositoryImplTest : ShouldSpec({
 
     should("return list of post when posts service success") {
         val postList = listOf(Post(1, 23, "title", "Description"))
-        coEvery { api.posts(authorization) } returns JsonObject()
+        coEvery { api.posts(apiKey) } returns JsonObject()
         coEvery { parser.parse(any()) } returns postList
         val repository = PostsRepositoryImpl(api, parser)
 

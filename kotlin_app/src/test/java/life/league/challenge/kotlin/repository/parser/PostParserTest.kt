@@ -1,11 +1,11 @@
-package life.league.challenge.kotlin.repository
+package life.league.challenge.kotlin.repository.parser
 
 import com.google.gson.JsonParser
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import life.league.challenge.kotlin.model.Post
-import life.league.challenge.kotlin.repository.parser.PostParser
+import life.league.challenge.kotlin.repository.APIInvalidException
 
 internal class PostParserTest : ShouldSpec({
 

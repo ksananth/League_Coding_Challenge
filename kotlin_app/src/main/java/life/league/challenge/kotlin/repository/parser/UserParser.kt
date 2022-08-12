@@ -8,7 +8,9 @@ class UserParser {
         return result.asJsonArray.map {
             val userObject = it.asJsonObject
             val id = userObject["id"].asInt
-            val avatar = userObject["avatar"].asString
+            val avatar = if (userObject.has("avatar")) {
+                userObject["avatar"].asString
+            } else null
             val username = userObject["username"].asString
 
             User(id, avatar, username)

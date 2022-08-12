@@ -5,15 +5,14 @@ import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import life.league.challenge.kotlin.domain.User
 
-internal class UserParserTest:ShouldSpec({
+internal class UserParserTest : ShouldSpec({
 
     val parser = UserParser()
 
-    should("parse user from response"){
+    should("parse user from response") {
         val response = """[
                                 {
                                     "id": 1,
-                                    "avatar": "https://i.pravatar.cc/150?u=1",
                                     "name": "Leanne Graham",
                                     "username": "Bret",
                                     "email": "Sincere@april.biz",
@@ -38,12 +37,14 @@ internal class UserParserTest:ShouldSpec({
                             ]""".trim()
         val res = JsonParser.parseString(response).asJsonArray
 
-        val result= parser.parse(res)
+        val result = parser.parse(res)
 
-        result shouldBe listOf(User(
-            id = 1,
-            avatar ="https://i.pravatar.cc/150?u=1",
-            username =  "Bret"
-        ))
+        result shouldBe listOf(
+            User(
+                id = 1,
+                avatar = null,
+                username = "Bret"
+            )
+        )
     }
 })

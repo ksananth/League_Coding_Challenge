@@ -7,10 +7,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import life.league.challenge.kotlin.R
-import life.league.challenge.kotlin.appModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +22,10 @@ class MainActivity : AppCompatActivity() {
 
         toolbar = findViewById(R.id.mainToolBar)
         setSupportActionBar(toolbar)
-        appBarConfiguration = AppBarConfiguration(navController.graph, null)
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.loginFragment,
+            R.id.viewPostsFragment,
+        ))
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 }

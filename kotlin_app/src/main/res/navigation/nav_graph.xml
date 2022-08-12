@@ -4,7 +4,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:label="Posts"
-        android:id="@+id/viewPosts"
+        android:id="@+id/viewPostsFragment"
         android:name="life.league.challenge.kotlin.feature.posts.ViewPostsFragment">
         <argument
             android:name="apiKey"
@@ -18,7 +18,7 @@
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true"
             android:id="@+id/action_loginFragment_to_viewPosts"
-            app:destination="@id/viewPosts">
+            app:destination="@id/viewPostsFragment">
         </action>
     </fragment>
 </navigation>

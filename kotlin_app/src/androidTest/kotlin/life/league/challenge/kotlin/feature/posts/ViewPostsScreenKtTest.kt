@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import life.league.challenge.kotlin.composables.ErrorType
 import life.league.challenge.kotlin.domain.UserPost
 import life.league.challenge.kotlin.model.Post
 import org.junit.Rule
@@ -32,7 +33,7 @@ internal class ViewPostsScreenKtTest {
             ViewPostsScreen(state = ViewPostsViewModel.UIState.Error)
         }
 
-        composeTestRule.onNodeWithText("Something went wrong").assertIsDisplayed()
+        composeTestRule.onNodeWithText(ErrorType.TECHNICAL_ERROR.message).assertIsDisplayed()
     }
 
     @Test

@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import io.mockk.mockk
+import life.league.challenge.kotlin.composables.ErrorType
 import org.junit.Rule
 import org.junit.Test
 
@@ -20,7 +21,7 @@ import org.junit.Test
         composeTestRule.setContent {
                 LoginScreen(
                     state = LoginViewModel.UIState.Loading,
-                    navigate = mockk()
+                    navigate = FakeInteraction()
                 )
         }
 
@@ -32,11 +33,11 @@ import org.junit.Test
          composeTestRule.setContent {
              LoginScreen(
                  state = LoginViewModel.UIState.Error,
-                 navigate = mockk()
+                 navigate = FakeInteraction()
              )
          }
 
-         composeTestRule.onNodeWithText("Something went wrong").assertIsDisplayed()
+         composeTestRule.onNodeWithText(ErrorType.TECHNICAL_ERROR.message).assertIsDisplayed()
      }
 
      @Test
@@ -44,10 +45,17 @@ import org.junit.Test
          composeTestRule.setContent {
              LoginScreen(
                  state = LoginViewModel.UIState.NoInternet,
-                 navigate = mockk()
+                 navigate = FakeInteraction()
              )
          }
 
-         composeTestRule.onNodeWithText("Please check your internet connections.").assertIsDisplayed()
+         composeTestRule.onNodeWithText(ErrorType.NO_INTERNET.message).assertIsDisplayed()
+     }
+
+     class FakeInteraction: Navigate{
+         override fun navigateToPosts(apiKey: String) {
+
+         }
+
      }
 }

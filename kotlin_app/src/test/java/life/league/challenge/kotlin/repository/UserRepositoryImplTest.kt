@@ -7,7 +7,11 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import life.league.challenge.kotlin.api.Api
 import life.league.challenge.kotlin.api.ApiResponse
+import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.jupiter.api.Assertions.*
+import retrofit2.HttpException
+import retrofit2.Response
 
 internal class UserRepositoryImplTest: ShouldSpec({
 
@@ -21,5 +25,19 @@ internal class UserRepositoryImplTest: ShouldSpec({
         val result = repository.getUsers(apiKey)
 
         result shouldBe ApiResponse.Success(response)
+    }
+
+    should("return api error when user service fails") {
+        val httpException = HttpException(
+            Response.error<ResponseBody>(
+                500, "error".toResponseBody()
+            )
+        )
+        coEvery { api.users(apiKey) } throws httpException
+        val repository = UserRepositoryImpl(api)
+
+        val result = repository.getUsers(apiKey)
+
+        result shouldBe ApiResponse.ApiError(httpException)
     }
 })

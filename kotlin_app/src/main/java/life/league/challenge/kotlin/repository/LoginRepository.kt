@@ -36,8 +36,4 @@ class AuthorizationHelper {
             Base64.NO_WRAP
         )
     }
-
-    fun createAuth(apiKey: String): String {
-        return "Token x-access-token=$apiKey"
-    }
 }

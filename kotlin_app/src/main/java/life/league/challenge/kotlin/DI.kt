@@ -6,6 +6,7 @@ import life.league.challenge.kotlin.feature.posts.ViewPostsViewModel
 import life.league.challenge.kotlin.repository.*
 import life.league.challenge.kotlin.repository.PostsRepository
 import life.league.challenge.kotlin.repository.PostsRepositoryImpl
+import life.league.challenge.kotlin.repository.parser.PostParser
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

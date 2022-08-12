@@ -3,6 +3,7 @@ package life.league.challenge.kotlin.repository
 import life.league.challenge.kotlin.api.Api
 import life.league.challenge.kotlin.api.ApiResponse
 import life.league.challenge.kotlin.model.Post
+import life.league.challenge.kotlin.repository.parser.PostParser
 import retrofit2.HttpException
 import java.io.IOException
 

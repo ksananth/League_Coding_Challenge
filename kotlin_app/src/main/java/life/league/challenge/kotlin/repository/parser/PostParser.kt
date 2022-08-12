@@ -1,7 +1,8 @@
-package life.league.challenge.kotlin.repository
+package life.league.challenge.kotlin.repository.parser
 
 import com.google.gson.JsonElement
 import life.league.challenge.kotlin.model.Post
+import life.league.challenge.kotlin.repository.APIInvalidException
 
 class PostParser {
 

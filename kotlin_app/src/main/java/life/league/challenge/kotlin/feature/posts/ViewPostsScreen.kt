@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import life.league.challenge.kotlin.composables.ErrorScreen
 import life.league.challenge.kotlin.composables.Loading
@@ -43,21 +44,27 @@ fun ShowPosts(data: List<UserPost>) {
 @Composable
 fun PostCard(msg: UserPost) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
-        Image(
-            painter = rememberAsyncImagePainter(model = msg.avatar, error = painterResource(R.drawable.ic__avatar), placeholder = painterResource(R.drawable.ic_loading)),
-            contentDescription = "Contact profile picture",
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .testTag("IMAGE")
-        )
-
-        Spacer(modifier = Modifier.width(8.dp))
 
         Column {
-            Text(text = msg.title)
+            Row {
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = msg.avatar,
+                        error = painterResource(R.drawable.ic__avatar),
+                        placeholder = painterResource(R.drawable.ic_loading)
+                    ),
+                    contentDescription = "Contact profile picture",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .testTag("IMAGE")
+                )
+                msg.userName?.let { Text(text = msg.userName, fontSize = 14.sp, modifier = Modifier.padding(start = 4.dp)) }
+            }
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = msg.description)
+            Text(text = msg.title, fontSize = 14.sp)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = msg.description, fontSize = 12.sp)
         }
     }
 }

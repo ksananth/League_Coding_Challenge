@@ -18,6 +18,7 @@ import life.league.challenge.kotlin.composables.Loading
 import life.league.challenge.kotlin.composables.NoInternetScreen
 import life.league.challenge.kotlin.domain.UserPost
 import life.league.challenge.kotlin.R
+import life.league.challenge.kotlin.composables.ErrorType
 
 const val TEST_TAG_IMAGE = "IMAGE"
 
@@ -25,10 +26,10 @@ const val TEST_TAG_IMAGE = "IMAGE"
 internal fun ViewPostsScreen(state: ViewPostsViewModel.UIState) {
     when (state) {
         is ViewPostsViewModel.UIState.Data -> ShowPosts(state.data)
-        ViewPostsViewModel.UIState.Error -> ErrorScreen("Something went wrong")
+        ViewPostsViewModel.UIState.Error -> ErrorScreen(ErrorType.TECHNICAL_ERROR)
         ViewPostsViewModel.UIState.Loading -> Loading("Fetching posts...")
         ViewPostsViewModel.UIState.NoInternet -> NoInternetScreen()
-        ViewPostsViewModel.UIState.ApiInvalid -> ErrorScreen("Api invalid")
+        ViewPostsViewModel.UIState.ApiInvalid -> ErrorScreen(ErrorType.API_INVALID)
     }
 }
 

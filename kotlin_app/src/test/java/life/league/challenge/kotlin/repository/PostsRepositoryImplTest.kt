@@ -76,4 +76,19 @@ internal class PostsRepositoryImplTest : ShouldSpec({
 
         result shouldBe ApiResponse.Success(listOf(UserPost("an avatar","ananth","title", "Description")))
     }
+
+    should("return api error when users service fails") {
+        val httpException = HttpException(
+            Response.error<ResponseBody>(
+                500, "error".toResponseBody()
+            )
+        )
+        coEvery { userRepository.getUsers(apiKey) } returns ApiResponse.ApiError(httpException)
+        coEvery { api.posts(apiKey) } returns JsonObject()
+        val repository = PostsRepositoryImpl(api, parser, userRepository)
+
+        val result = repository.getPosts(apiKey)
+
+        result shouldBe ApiResponse.ApiError(httpException)
+    }
 })

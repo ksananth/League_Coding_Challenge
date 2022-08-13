@@ -1,4 +1,4 @@
-# Android-code-challenge ![Build status](https://github.com/ksananth/League_Coding_Challenge/workflows/CI/badge.svg?branch=master)
+# Android-code-challenge ![main branch](https://github.com/ksananth/League_Coding_Challenge/actions/workflows/android.yml/badge.svg?branch=main)
 
 ## Way of working
 

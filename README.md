@@ -35,12 +35,20 @@ The android app lets you:
 ## Run Application
 Make sure you connected device/emulator
 
+```ruby
 ./gradlew assembleDebug
 ./gradlew installDebug
+```
 
 
 ## Run Unit tests and UI tests
 
+
+```ruby
 ./gradlew testDebugUnitTest
 ./gradlew connectedAndroidTest
+```
+
+
+
 

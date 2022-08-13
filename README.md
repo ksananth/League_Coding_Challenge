@@ -15,12 +15,9 @@ The android app lets you:
 
 ## Screenshots
 
-[<img src="/readme/Wallabag%20Reading%20List.png" align="left"
-width="200"
-    hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
-[<img src="/readme/Wallabag%20Article%20View.png" align="center"
-width="200"
-    hspace="10" vspace="10">](/readme/Wallabag%20Article%20View.png)
+| Success   |      Loading      |  Api Error | Technical Error | No Internet connection |
+|----------|:-------------:|------:|------:|------:|
+| <img src="screenshots/success.png" alt="drawing" width="200"/> |  <img src="screenshots/loading.png" alt="drawing" width="200"/> | <img src="screenshots/api.png" alt="drawing" width="200"/> | <img src="screenshots/error.png" alt="drawing" width="200"/> | <img src="screenshots/internet.png" alt="drawing" width="200"/> |
 
 ## Android components and libraries used
 

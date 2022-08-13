@@ -18,6 +18,6 @@ class UserParser {
 
     private fun JsonObject.hasObjectOrNull(key: String) =
         if (this.has(key)) {
-            this["key"].asString
+            this[key].asString
         } else null
 }

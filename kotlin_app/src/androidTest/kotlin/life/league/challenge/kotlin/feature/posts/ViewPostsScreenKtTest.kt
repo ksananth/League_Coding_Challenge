@@ -22,6 +22,7 @@ internal class ViewPostsScreenKtTest {
     fun loadingState() {
         composeTestRule.setContent {
             ViewPostsScreen(state = ViewPostsViewModel.UIState.Loading)
+            {}
         }
 
         composeTestRule.onNodeWithText("Fetching posts...").assertIsDisplayed()
@@ -30,7 +31,7 @@ internal class ViewPostsScreenKtTest {
     @Test
     fun errorState() {
         composeTestRule.setContent {
-            ViewPostsScreen(state = ViewPostsViewModel.UIState.Error)
+            ViewPostsScreen(state = ViewPostsViewModel.UIState.Error) {}
         }
 
         composeTestRule.onNodeWithText(ErrorType.TECHNICAL_ERROR.message).assertIsDisplayed()
@@ -39,10 +40,11 @@ internal class ViewPostsScreenKtTest {
     @Test
     fun noInternetState() {
         composeTestRule.setContent {
-            ViewPostsScreen(state = ViewPostsViewModel.UIState.NoInternet)
+            ViewPostsScreen(state = ViewPostsViewModel.UIState.NoInternet) {}
         }
 
-        composeTestRule.onNodeWithText("Please check your internet connections.").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Please check your internet connections.")
+            .assertIsDisplayed()
     }
 
     @Test
@@ -53,7 +55,7 @@ internal class ViewPostsScreenKtTest {
 
         composeTestRule.setContent {
             val aPost = UserPost("an avatar", "an user name", title, body)
-            ViewPostsScreen(state = ViewPostsViewModel.UIState.Data(listOf(aPost)))
+            ViewPostsScreen(state = ViewPostsViewModel.UIState.Data(listOf(aPost))) {}
         }
 
         composeTestRule.onNodeWithText(title).assertIsDisplayed()

@@ -10,7 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
- class LoginScreenTest {
+class LoginScreenTest {
 
     @Rule
     @JvmField
@@ -19,43 +19,43 @@ import org.junit.Test
     @Test
     fun loadingState() {
         composeTestRule.setContent {
-                LoginScreen(
-                    state = LoginViewModel.UIState.Loading,
-                    navigate = FakeInteraction()
-                )
+            LoginScreen(
+                state = LoginViewModel.UIState.Loading,
+                navigate = FakeInteraction(), {}
+            )
         }
 
         composeTestRule.onNodeWithText("Please wait logging in...").assertIsDisplayed()
     }
 
-     @Test
-     fun errorState() {
-         composeTestRule.setContent {
-             LoginScreen(
-                 state = LoginViewModel.UIState.Error,
-                 navigate = FakeInteraction()
-             )
-         }
+    @Test
+    fun errorState() {
+        composeTestRule.setContent {
+            LoginScreen(
+                state = LoginViewModel.UIState.Error,
+                navigate = FakeInteraction()
+            ){}
+        }
 
-         composeTestRule.onNodeWithText(ErrorType.TECHNICAL_ERROR.message).assertIsDisplayed()
-     }
+        composeTestRule.onNodeWithText(ErrorType.TECHNICAL_ERROR.message).assertIsDisplayed()
+    }
 
-     @Test
-     fun noInternetState() {
-         composeTestRule.setContent {
-             LoginScreen(
-                 state = LoginViewModel.UIState.NoInternet,
-                 navigate = FakeInteraction()
-             )
-         }
+    @Test
+    fun noInternetState() {
+        composeTestRule.setContent {
+            LoginScreen(
+                state = LoginViewModel.UIState.NoInternet,
+                navigate = FakeInteraction()
+            ){}
+        }
 
-         composeTestRule.onNodeWithText(ErrorType.NO_INTERNET.message).assertIsDisplayed()
-     }
+        composeTestRule.onNodeWithText(ErrorType.NO_INTERNET.message).assertIsDisplayed()
+    }
 
-     class FakeInteraction: Navigate{
-         override fun navigateToPosts(apiKey: String) {
+    class FakeInteraction : Navigate {
+        override fun navigateToPosts(apiKey: String) {
 
-         }
+        }
 
-     }
+    }
 }

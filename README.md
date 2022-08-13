@@ -1,8 +1,8 @@
 # Android-code-challenge ![Build status](https://github.com/ksananth/League_Coding_Challenge/workflows/CI/badge.svg?branch=master)
 
-## About
+## Way of working
 
-Blah blah
+<img src="screenshots/way.png" alt="drawing"/>
 
 ## Features
 

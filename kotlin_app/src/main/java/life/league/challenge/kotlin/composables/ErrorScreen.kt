@@ -2,8 +2,11 @@ package life.league.challenge.kotlin.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -20,7 +23,7 @@ enum class ErrorType(val message: String, val image: Int) {
 }
 
 @Composable
-fun ErrorScreen(type: ErrorType) {
+fun ErrorScreen(type: ErrorType, listener: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.align(Alignment.Center),
@@ -33,7 +36,28 @@ fun ErrorScreen(type: ErrorType) {
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = type.message)
+        }
+        Snackbar(listener, modifier = Modifier.align(Alignment.BottomCenter), type.message)
+    }
+}
+
+
+@Composable
+fun Snackbar(listener: () -> Unit, modifier: Modifier, message: String) {
+    Column(modifier = modifier) {
+        val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(true) }
+        if (snackbarVisibleState) {
+            androidx.compose.material.Snackbar(
+                action = {
+                    Button(onClick = {
+                        listener.invoke()
+                        setSnackBarState(!snackbarVisibleState)
+                    }) {
+                        Text("Retry!")
+                    }
+                },
+                modifier = Modifier.padding(8.dp)
+            ) { Text(text = message) }
         }
     }
 }

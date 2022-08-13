@@ -23,13 +23,13 @@ import life.league.challenge.kotlin.composables.ErrorType
 const val TEST_TAG_IMAGE = "IMAGE"
 
 @Composable
-internal fun ViewPostsScreen(state: ViewPostsViewModel.UIState) {
+internal fun ViewPostsScreen(state: ViewPostsViewModel.UIState, listener: () -> Unit) {
     when (state) {
         is ViewPostsViewModel.UIState.Data -> ShowPosts(state.data)
-        ViewPostsViewModel.UIState.Error -> ErrorScreen(ErrorType.TECHNICAL_ERROR)
+        ViewPostsViewModel.UIState.Error -> ErrorScreen(ErrorType.TECHNICAL_ERROR,listener)
         ViewPostsViewModel.UIState.Loading -> Loading("Fetching posts...")
         ViewPostsViewModel.UIState.NoInternet -> NoInternetScreen()
-        ViewPostsViewModel.UIState.ApiInvalid -> ErrorScreen(ErrorType.API_INVALID)
+        ViewPostsViewModel.UIState.ApiInvalid -> ErrorScreen(ErrorType.API_INVALID,listener)
     }
 }
 

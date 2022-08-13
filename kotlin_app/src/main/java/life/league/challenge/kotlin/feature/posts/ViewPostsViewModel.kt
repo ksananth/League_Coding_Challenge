@@ -20,20 +20,32 @@ internal class ViewPostsViewModel(
     private val _uiState: MutableStateFlow<UIState> by lazy {
         MutableStateFlow<UIState>(UIState.Loading).apply {
             viewModelScope.launch {
-                val state = when (val result = postsRepository.getPosts(apiKey)) {
-                    is ApiResponse.NoInternetError -> UIState.NoInternet
-                    is ApiResponse.Success -> UIState.Data(result.data)
-                    is ApiResponse.ApiError -> if (result.exception is APIInvalidException) {
-                        UIState.ApiInvalid
-                    } else {
-                        UIState.Error
-                    }
-                }
-                emit(state)
+                emit(getPosts())
             }
         }
     }
+
     val uiState: StateFlow<UIState> get() = _uiState
+
+    fun retry() {
+        viewModelScope.launch {
+            _uiState.emit(UIState.Loading)
+            _uiState.emit(getPosts())
+        }
+    }
+
+    private suspend fun getPosts(): UIState {
+        val state = when (val result = postsRepository.getPosts(apiKey)) {
+            is ApiResponse.NoInternetError -> UIState.NoInternet
+            is ApiResponse.Success -> UIState.Data(result.data)
+            is ApiResponse.ApiError -> if (result.exception is APIInvalidException) {
+                UIState.ApiInvalid
+            } else {
+                UIState.Error
+            }
+        }
+        return state
+    }
 
     internal sealed class UIState {
         data class Data(val data: List<UserPost>) : UIState()

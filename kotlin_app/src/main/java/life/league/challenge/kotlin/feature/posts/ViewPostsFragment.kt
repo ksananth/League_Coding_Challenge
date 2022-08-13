@@ -32,7 +32,9 @@ class ViewPostsFragment : Fragment() {
                 val state by remember { viewModel.uiState }.collectAsState()
 
                 MyApplicationTheme {
-                    ViewPostsScreen(state)
+                    ViewPostsScreen(state) {
+                        viewModel.retry()
+                    }
                 }
             }
         }

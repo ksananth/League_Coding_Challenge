@@ -29,6 +29,15 @@ internal class ViewPostsViewModelTest:BehaviorSpec({
                         awaitItem() shouldBe ViewPostsViewModel.UIState.Error
                     }
                 }
+
+                then("retry"){
+                    val data = listOf(UserPost("avatar", "ananth", "a titile", " a body"))
+                    coEvery { postsRepository.getPosts(any()) } returns ApiResponse.Success(data)
+
+                    viewModel.retry()
+
+                    viewModel.uiState.value shouldBe ViewPostsViewModel.UIState.Data(data)
+                }
             }
 
             and("no internet") {
@@ -71,7 +80,6 @@ internal class ViewPostsViewModelTest:BehaviorSpec({
                     }
                 }
             }
-
         }
     }
 })

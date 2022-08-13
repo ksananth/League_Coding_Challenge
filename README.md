@@ -17,7 +17,7 @@ The android app lets you:
 
 | Success   |      Loading      |  Api Error | Technical Error | No Internet connection |
 |----------|:-------------:|------:|------:|------:|
-| <img src="screenshots/success.png" alt="drawing" width="200"/> |  <img src="screenshots/loading.png" alt="drawing" width="200"/> | <img src="screenshots/api.png" alt="drawing" width="200"/> | <img src="screenshots/error.png" alt="drawing" width="200"/> | <img src="screenshots/internet.png" alt="drawing" width="200"/> |
+| <img src="screenshots/success.jpeg" alt="drawing" width="200"/> |  <img src="screenshots/loading.png" alt="drawing" width="200"/> | <img src="screenshots/api.png" alt="drawing" width="200"/> | <img src="screenshots/error.png" alt="drawing" width="200"/> | <img src="screenshots/internet.png" alt="drawing" width="200"/> |
 
 ## Android components and libraries used
 

@@ -13,5 +13,6 @@ fun LoginScreen(state: LoginViewModel.UIState, navigate: Navigate, listener: () 
         is LoginViewModel.UIState.Loading -> Loading("Please wait logging in...")
         is LoginViewModel.UIState.NavigateToPosts -> navigate.navigateToPosts(state.apiKey)
         is LoginViewModel.UIState.NoInternet -> ErrorScreen(ErrorType.NO_INTERNET, listener)
+        is LoginViewModel.UIState.ApiInvalid ->  ErrorScreen(ErrorType.API_INVALID, listener)
     }
 }

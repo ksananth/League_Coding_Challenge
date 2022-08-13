@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import life.league.challenge.kotlin.api.ApiResponse
+import life.league.challenge.kotlin.feature.posts.ViewPostsViewModel
+import life.league.challenge.kotlin.repository.APIInvalidException
 import life.league.challenge.kotlin.repository.LoginRepository
 
 private const val USERNAME = "hello"
@@ -33,7 +35,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     private suspend fun getApiKey(): UIState {
         val state = when (val result = loginRepository.login(USERNAME, PASSWORD)) {
-            is ApiResponse.ApiError -> UIState.Error
+            is ApiResponse.ApiError -> if (result.exception is APIInvalidException) UIState.ApiInvalid else UIState.Error
             is ApiResponse.NoInternetError -> UIState.NoInternet
             is ApiResponse.Success -> if (result.data.apiKey.isNullOrEmpty()) {
                 UIState.Error
@@ -48,6 +50,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         object Loading : UIState()
         object Error : UIState()
         object NoInternet : UIState()
+        object ApiInvalid : UIState()
         data class NavigateToPosts(val apiKey: String) : UIState()
     }
 }

@@ -2,7 +2,7 @@
 
 ## Way of working
 
-<img src="screenshots/way.png" alt="drawing"/>
+<img src="screenshots/way.jpeg" alt="drawing"/>
 
 ## Features
 

@@ -25,6 +25,7 @@ The android app lets you:
 - AndroidX Navigation Component.
 - Coroutines.
 - Flow.
+- Koin - Dependency injection
 - Coil - To Load image
 - Retrofit
 - Gson

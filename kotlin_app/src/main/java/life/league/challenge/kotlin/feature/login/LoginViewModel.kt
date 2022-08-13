@@ -21,6 +21,16 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
+    val uiState: StateFlow<UIState> get() = _uiState
+
+    fun retry() {
+        viewModelScope.launch {
+            _uiState.emit(UIState.Loading)
+            val state = getApiKey()
+            _uiState.emit(state)
+        }
+    }
+
     private suspend fun getApiKey(): UIState {
         val state = when (val result = loginRepository.login(USERNAME, PASSWORD)) {
             is ApiResponse.ApiError -> UIState.Error
@@ -32,16 +42,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             }
         }
         return state
-    }
-
-    val uiState: StateFlow<UIState> get() = _uiState
-
-    fun retry() {
-        viewModelScope.launch {
-            _uiState.emit(UIState.Loading)
-            val state = getApiKey()
-            _uiState.emit(state)
-        }
     }
 
     sealed class UIState {

@@ -12,25 +12,37 @@ private const val USERNAME = "hello"
 private const val PASSWORD = "world"
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
-
     private val _uiState: MutableStateFlow<UIState> by lazy {
         MutableStateFlow<UIState>(UIState.Loading).apply {
             viewModelScope.launch {
-                val state = when (val result = loginRepository.login(USERNAME, PASSWORD)) {
-                    is ApiResponse.ApiError -> UIState.Error
-                    is ApiResponse.NoInternetError -> UIState.NoInternet
-                    is ApiResponse.Success -> if (result.data.apiKey.isNullOrEmpty()) {
-                        UIState.Error
-                    } else {
-                        UIState.NavigateToPosts(result.data.apiKey)
-                    }
-                }
+                val state = getApiKey()
                 emit(state)
             }
         }
     }
+
+    private suspend fun getApiKey(): UIState {
+        val state = when (val result = loginRepository.login(USERNAME, PASSWORD)) {
+            is ApiResponse.ApiError -> UIState.Error
+            is ApiResponse.NoInternetError -> UIState.NoInternet
+            is ApiResponse.Success -> if (result.data.apiKey.isNullOrEmpty()) {
+                UIState.Error
+            } else {
+                UIState.NavigateToPosts(result.data.apiKey)
+            }
+        }
+        return state
+    }
+
     val uiState: StateFlow<UIState> get() = _uiState
 
+    fun retry() {
+        viewModelScope.launch {
+            _uiState.emit(UIState.Loading)
+            val state = getApiKey()
+            _uiState.emit(state)
+        }
+    }
 
     sealed class UIState {
         object Loading : UIState()

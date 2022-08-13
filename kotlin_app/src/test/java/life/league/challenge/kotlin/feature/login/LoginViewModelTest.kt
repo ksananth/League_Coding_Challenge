@@ -18,7 +18,9 @@ internal class LoginViewModelTest : BehaviorSpec({
         `when`("screen loaded") {
 
             and("service fails") {
-                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.ApiError(Exception("an error"))
+                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.ApiError(
+                    Exception("an error")
+                )
 
                 val viewModel = LoginViewModel(loginRepository)
 
@@ -27,10 +29,25 @@ internal class LoginViewModelTest : BehaviorSpec({
                         awaitItem() shouldBe LoginViewModel.UIState.Error
                     }
                 }
+
+                then("retry success") {
+                    val apiKey = "api key"
+                    coEvery { loginRepository.login(any(), any()) } returns ApiResponse.Success(
+                        Account(
+                            apiKey
+                        )
+                    )
+
+                    viewModel.retry()
+
+                    viewModel.uiState.value shouldBe LoginViewModel.UIState.NavigateToPosts(apiKey)
+                }
             }
 
             and("no internet") {
-                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.NoInternetError(Exception("an error"))
+                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.NoInternetError(
+                    Exception("an error")
+                )
 
                 val viewModel = LoginViewModel(loginRepository)
 
@@ -43,9 +60,11 @@ internal class LoginViewModelTest : BehaviorSpec({
 
             and("success but api key is null") {
                 val apiKey = null
-                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.Success(Account(
-                    apiKey
-                ))
+                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.Success(
+                    Account(
+                        apiKey
+                    )
+                )
 
                 val viewModel = LoginViewModel(loginRepository)
 
@@ -58,9 +77,11 @@ internal class LoginViewModelTest : BehaviorSpec({
 
             and("success") {
                 val apiKey = "api key"
-                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.Success(Account(
-                    apiKey
-                ))
+                coEvery { loginRepository.login(any(), any()) } returns ApiResponse.Success(
+                    Account(
+                        apiKey
+                    )
+                )
 
                 val viewModel = LoginViewModel(loginRepository)
 

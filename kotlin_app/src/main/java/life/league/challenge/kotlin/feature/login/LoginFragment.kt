@@ -25,7 +25,9 @@ class LoginFragment : Fragment(), Navigate {
             setContent {
                 val state by remember { viewModel.uiState }.collectAsState()
                 MyApplicationTheme {
-                    LoginScreen(state, this@LoginFragment) {}
+                    LoginScreen(state, this@LoginFragment) {
+                        viewModel.retry()
+                    }
                 }
             }
         }
